@@ -10,25 +10,36 @@ export class ContactoService {
 
   constructor(@InjectModel('Contacto') private readonly contactoModel:Model<Contacto>){}
 
-
+/*
   async create(createContactoDto: CreateContactoDto):Promise<Contacto> {
     const nuevo= new this.contactoModel(createContactoDto);
      return await nuevo.save();
+  }
+*/
+  async create(createContactoDto: CreateContactoDto): Promise<Contacto> {
+    const contacto = await this.contactoModel.create(createContactoDto);
+    return contacto.save();
   }
 
   async findAll():Promise<Contacto[]> {
     return await this.contactoModel.find();
   }
 
-  async findOne(id: number):Promise<Contacto>  {
+  async findOne(id: string):Promise<Contacto>  {
     return await this.contactoModel.findOne({_id:id});
   }
 
+  
+/*
   update(id: number, updateContactoDto: UpdateContactoDto) {
     return `This action updates a #${id} contacto`;
   }
+*/
+  async update(id: string, updateContactoDto: UpdateContactoDto): Promise<Contacto> {
+    return this.contactoModel.findByIdAndUpdate(id, updateContactoDto, { new: true }).exec();
+  }
 
-  remove(id: number) {
-    return `This action removes a #${id} contacto`;
+  async remove(id: string): Promise<Contacto> {
+    return this.contactoModel.findByIdAndRemove(id).exec();
   }
 }

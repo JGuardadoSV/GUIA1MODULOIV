@@ -21,7 +21,17 @@ export class ContactoController {
 
   @Get(':id')
   findOne(@Param('id') id: string): Promise<Contacto>  {
-    return this.contactoService.findOne(+id);
+    return this.contactoService.findOne(id);
+  }
+
+  @Patch(':id')
+  async update(@Param('id') id: string, @Body() updateContactoDto: UpdateContactoDto): Promise<Contacto> {
+    return this.contactoService.update(id, updateContactoDto);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string): Promise<Contacto> {
+    return this.contactoService.remove(id);
   }
 
 }
