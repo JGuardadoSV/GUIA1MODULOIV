@@ -3,12 +3,14 @@ import { ContactoService } from './contacto.service';
 import { CreateContactoDto } from './dto/create-contacto.dto';
 import { UpdateContactoDto } from './dto/update-contacto.dto';
 import { Contacto } from './interface/contacto.interface';
+import { ApiBody } from '@nestjs/swagger';
 
 
 @Controller('contacto')
 export class ContactoController {
   constructor(private readonly contactoService: ContactoService) {}
 
+  @ApiBody({ type: [CreateContactoDto], description:"NO envie el id" })
   @Post()
   create(@Body() createContactoDto: CreateContactoDto) {
     return this.contactoService.create(createContactoDto);
